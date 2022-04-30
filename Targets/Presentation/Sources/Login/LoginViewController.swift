@@ -10,8 +10,9 @@ final class LoginViewController: UIViewController {
     }
     
     let loginButton: UIButton = {
-        let button: UIButton = .init(type: .custom)
+        let button: UIButton = .init(type: .system)
         button.setTitle("로그인", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 15
@@ -28,11 +29,12 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(loginButton)
         loginButton.snp.makeConstraints { maker in
             maker.left.equalTo(view.safeAreaLayoutGuide).offset(20)
-            maker.right.equalTo(view.safeAreaLayoutGuide).offset(20)
+            maker.right.equalTo(view.safeAreaLayoutGuide).offset(-20)
             maker.centerY.equalTo(view.safeAreaLayoutGuide)
-            maker.height.equalTo(80)
+            maker.height.equalTo(40)
         }
     }
     
