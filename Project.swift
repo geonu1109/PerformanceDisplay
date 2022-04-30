@@ -42,7 +42,21 @@ func makeAppTargets(name: String, platform: Platform, dependencies: [TargetDepen
         resources: ["Targets/\(name)/Resources/**"],
         dependencies: dependencies,
         settings: .settings(
-            base: .init().automaticCodeSigning(devTeam: "BZJWM2U93W")
+            base: .init().automaticCodeSigning(devTeam: "BZJWM2U93W"),
+            configurations: [
+                .debug(
+                    name: "Debug",
+                    settings: [
+                        "OTHER_LDFLAGS": "-ObjC"
+                    ]
+                ),
+                .release(
+                    name: "Release",
+                    settings: [
+                        "OTHER_LDFLAGS": "-ObjC"
+                    ]
+                )
+            ]
         )
     )
 
@@ -74,15 +88,16 @@ let project: Project = .init(
             .external(name: "RxCocoa")
         ]),
         makeFrameworkTargets(name: "Domain", platform: .iOS, dependencies: [
-            .target(name: "Core")
+            .target(name: "Utility")
         ]),
         makeFrameworkTargets(name: "Data", platform: .iOS, dependencies: [
             .target(name: "Domain"),
             .external(name: "RxAlamofire")
         ]),
-        makeFrameworkTargets(name: "Core", platform: .iOS, dependencies: [
+        makeFrameworkTargets(name: "Utility", platform: .iOS, dependencies: [
             .external(name: "RxSwift"),
-            .external(name: "RxRelay")
+            .external(name: "RxRelay"),
+            .external(name: "Swinject")
         ])
     ].flatMap { $0 }
 )
